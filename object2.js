@@ -50,11 +50,11 @@ function generateKepala(x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalS
     return { vertices: vertices, colors: colors, faces: faces };
 } 
 
-function generateKepala(x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalScaleZ) {
+function generateEar(x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalScaleZ, rotationX, rotationY, rotationZ) {
     var vertices = [];
     var colors = [];
     var rainbowColors = [
-        [249/255,236/255,220/255] // Warna A1C398
+        [254/255,230/255,232/255] // Warna A1C398
     ];
 
 
@@ -69,9 +69,22 @@ function generateKepala(x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalS
             var xCoord = cosLon * cosLat * ovalScaleX;
             var yCoord = sinLon * cosLat * ovalScaleY;
             var zCoord = sinLat * ovalScaleZ;
-            var vertexX = x + radius * xCoord;
-            var vertexY = y + radius * yCoord;
-            var vertexZ = z + radius * zCoord;
+            // var vertexX = x + radius * xCoord;
+            // var vertexY = y + radius * yCoord;
+            // var vertexZ = z + radius * zCoord;
+            // Rotasi
+            var rotatedX = xCoord * Math.cos(rotationZ) - yCoord * Math.sin(rotationZ);
+            var rotatedY = xCoord * Math.sin(rotationZ) + yCoord * Math.cos(rotationZ);
+            var rotatedZ = zCoord;
+            // Pemutaran tambahan untuk diagonal
+            rotatedY = rotatedY * Math.cos(rotationX) - rotatedZ * Math.sin(rotationX);
+            rotatedZ = rotatedY * Math.sin(rotationX) + rotatedZ * Math.cos(rotationX);
+            rotatedX = rotatedX * Math.cos(rotationY) - rotatedZ * Math.sin(rotationY);
+            rotatedZ = rotatedX * Math.sin(rotationY) + rotatedZ * Math.cos(rotationY);
+
+            var vertexX = x + radius * rotatedX;
+            var vertexY = y + radius * rotatedY;
+            var vertexZ = z + radius * rotatedZ;
             vertices.push(vertexX, vertexY, vertexZ);
             var colorIndex = j % rainbowColors.length;
             colors = colors.concat(rainbowColors[colorIndex]);
@@ -91,7 +104,7 @@ function generateKepala(x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalS
 } 
 
 //elipsoid paraboloid
-function generateUpperbody(x, y, z, radius, segments, rotationX, rotationY, rotationZ) {
+function generateUpperbody(x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalScaleZ) {
   var vertices = [];
   var colors = [];
 
@@ -110,9 +123,9 @@ function generateUpperbody(x, y, z, radius, segments, rotationX, rotationY, rota
           var sinLon = Math.sin(lonAngle);
           var cosLon = Math.cos(lonAngle);
 
-          var xCoord = cosLon * vLat;
-          var yCoord = -(Math.pow(vLat,2));
-          var zCoord = sinLon * vLat;
+          var xCoord = cosLon * vLat *ovalScaleX;
+          var yCoord = -(Math.pow(vLat,2)) * ovalScaleY;
+          var zCoord = sinLon * vLat * ovalScaleZ;
 
           var vertexX = x + radius * xCoord;
           var vertexY = y + radius * yCoord;
@@ -762,7 +775,7 @@ function main() {
     GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(kepala.faces), GL.STATIC_DRAW);
 
     //Upper Body
-    var upperbody = generateUpperbody(0, 0.2, 0.5, 0.4, 100, 0, 90, 0); // Example sphere: x=0, y=0, z=0.5, radius=0.6, segments=100, rotationX, rotationY, rotationZ
+    var upperbody = generateUpperbody(0, 0.2, 0.5, 0.4, 100, 1, 1, -1); // Example sphere: x=0, y=0, z=0.5, radius=0.6, segments=100, rotationX, rotationY, rotationZ
     var TUBE_VERTEX2 = GL.createBuffer();
     GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_VERTEX2);
     GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(upperbody.vertices), GL.STATIC_DRAW);
@@ -774,7 +787,7 @@ function main() {
     GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(upperbody.faces), GL.STATIC_DRAW);
 
     //Lower Body
-    var lowerbody = generateLowerbody(0, -0.78, 0.5, 0.628, 100, 0, 0, 0); // Example sphere: x=0, y=0, z=0.5, radius=0.6, segments=100
+    var lowerbody = generateLowerbody(0, -0.81, 0.5, 0.628, 100, 0, 0, 0); // Example sphere: x=0, y=0, z=0.5, radius=0.6, segments=100
     var TUBE_VERTEX4 = GL.createBuffer();
     GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_VERTEX4);
     GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(lowerbody.vertices), GL.STATIC_DRAW);
@@ -906,7 +919,7 @@ function main() {
     GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(leftsole.faces), GL.STATIC_DRAW);
 
     //Left Shoulder
-    var leftshoulder = generateLeftshoulder(1.185, -0.12, 0.5, 0.096, 50, 1, 1, 1); // Example tabung: x=0, y=0, z=0, radius=0.5, height=1.0, segments=50
+    var leftshoulder = generateLeftshoulder(1.185, -0.12, 0.5, 0.096, 50, 1, 1, 0.5); // Example tabung: x=0, y=0, z=0, radius=0.5, height=1.0, segments=50
     var TUBE_VERTEX13 = GL.createBuffer();
     GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_VERTEX13);
     GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(leftshoulder.vertices), GL.STATIC_DRAW);
@@ -918,7 +931,7 @@ function main() {
     GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(leftshoulder.faces), GL.STATIC_DRAW);
     
     //Right Shoulder
-    var rightshoulder = generateRightshoulder(-1.185, -0.12, 0.5, 0.096, 50, 1, 1, 1); // Example tabung: x=0, y=0, z=0, radius=0.5, height=1.0, segments=50
+    var rightshoulder = generateRightshoulder(-1.185, -0.12, 0.5, 0.096, 50, 1, 1, 0.5); // Example tabung: x=0, y=0, z=0, radius=0.5, height=1.0, segments=50
     var TUBE_VERTEX14 = GL.createBuffer();
     GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_VERTEX14);
     GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(rightshoulder.vertices), GL.STATIC_DRAW);
@@ -930,7 +943,7 @@ function main() {
     GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(rightshoulder.faces), GL.STATIC_DRAW);
 
     //Left Arm
-    var leftarm = generateArm(-0.55, -0.12, 0.5, 0.15, 0.8, 50); // Example tabung: x=0, y=0, z=0, radius=0.5, height=1.0, segments=50
+    var leftarm = generateArm(-0.6, -0.12, 0.5, 0.15, 0.6, 50); // Example tabung: x=0, y=0, z=0, radius=0.5, height=1.0, segments=50
     var TUBE_VERTEX15 = GL.createBuffer();
     GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_VERTEX15);
     GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(leftarm.vertices), GL.STATIC_DRAW);
@@ -942,7 +955,7 @@ function main() {
     GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(leftarm.faces), GL.STATIC_DRAW);
 
     //Right Arm
-    var rightarm = generateArm(0.55, -0.12, 0.5, 0.15, 0.8, 50); // Example tabung: x=0, y=0, z=0, radius=0.5, height=1.0, segments=50
+    var rightarm = generateArm(0.6, -0.12, 0.5, 0.15, 0.6, 50); // Example tabung: x=0, y=0, z=0, radius=0.5, height=1.0, segments=50
     var TUBE_VERTEX16 = GL.createBuffer();
     GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_VERTEX16);
     GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(rightarm.vertices), GL.STATIC_DRAW);
@@ -952,6 +965,30 @@ function main() {
     var TUBE_FACES16 = GL.createBuffer();
     GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, TUBE_FACES16);
     GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(rightarm.faces), GL.STATIC_DRAW);
+
+    //Right Ear
+    var rightear = generateEar(-0.38, 1.05, 0.45, 0.15, 100, 1, 3, 1, 0,0,0.25); // Example tabung: x=0, y=0, z=0, radius=0.5, height=1.0, segments=50
+    var TUBE_VERTEX18 = GL.createBuffer();//0, 1, 4
+    GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_VERTEX18);
+    GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(rightear.vertices), GL.STATIC_DRAW);
+    var TUBE_COLORS18 = GL.createBuffer();
+    GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_COLORS18);
+    GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(rightear.colors), GL.STATIC_DRAW);
+    var TUBE_FACES18 = GL.createBuffer();
+    GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, TUBE_FACES18);
+    GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(rightear.faces), GL.STATIC_DRAW);
+
+    //left Ear
+    var leftear = generateEar(0.38, 1.05, 0.45, 0.15, 100, 1, 3, 1, 0,0,-0.25); // x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalScaleZ
+    var TUBE_VERTEX19 = GL.createBuffer();// 0, -1, -4
+    GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_VERTEX19);
+    GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(leftear.vertices), GL.STATIC_DRAW);
+    var TUBE_COLORS19 = GL.createBuffer();
+    GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_COLORS19);
+    GL.bufferData(GL.ARRAY_BUFFER, new Float32Array(leftear.colors), GL.STATIC_DRAW);
+    var TUBE_FACES19 = GL.createBuffer();
+    GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, TUBE_FACES19);
+    GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(leftear.faces), GL.STATIC_DRAW);
 
     //matrix
     var PROJECTION_MATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
@@ -1258,6 +1295,7 @@ function main() {
         GL.uniformMatrix4fv(_MMatrix, false, MODEL_MATRIX);
         GL.drawElements(GL.TRIANGLES, rightarm.faces.length, GL.UNSIGNED_SHORT, 0);
 
+        //Tail Head
         GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_VERTEX17);
         GL.vertexAttribPointer(_position, 3, GL.FLOAT, false, 0, 0);
         GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_COLORS17);
@@ -1267,6 +1305,28 @@ function main() {
         GL.uniformMatrix4fv(_VMatrix, false, VIEW_MATRIX);
         GL.uniformMatrix4fv(_MMatrix, false, MODEL_MATRIX);
         GL.drawElements(GL.TRIANGLES, tailhead.faces.length, GL.UNSIGNED_SHORT, 0);
+
+        //Right Ear
+        GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_VERTEX18);
+        GL.vertexAttribPointer(_position, 3, GL.FLOAT, false, 0, 0);
+        GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_COLORS18);
+        GL.vertexAttribPointer(_color, 3, GL.FLOAT, false, 0, 0);
+        GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, TUBE_FACES18);
+        GL.uniformMatrix4fv(_PMatrix, false, PROJECTION_MATRIX);
+        GL.uniformMatrix4fv(_VMatrix, false, VIEW_MATRIX);
+        GL.uniformMatrix4fv(_MMatrix, false, MODEL_MATRIX);
+        GL.drawElements(GL.TRIANGLES, rightear.faces.length, GL.UNSIGNED_SHORT, 0);
+
+        //Left Ear
+        GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_VERTEX19);
+        GL.vertexAttribPointer(_position, 3, GL.FLOAT, false, 0, 0);
+        GL.bindBuffer(GL.ARRAY_BUFFER, TUBE_COLORS19);
+        GL.vertexAttribPointer(_color, 3, GL.FLOAT, false, 0, 0);
+        GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, TUBE_FACES19);
+        GL.uniformMatrix4fv(_PMatrix, false, PROJECTION_MATRIX);
+        GL.uniformMatrix4fv(_VMatrix, false, VIEW_MATRIX);
+        GL.uniformMatrix4fv(_MMatrix, false, MODEL_MATRIX);
+        GL.drawElements(GL.TRIANGLES, leftear.faces.length, GL.UNSIGNED_SHORT, 0);
 
         GL.flush();
 
