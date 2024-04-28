@@ -144,7 +144,6 @@ var envFunction = {
   generateGunung: function(x, y, z, radius, segments, scaleX, scaleY, scaleZ, rotationX, rotationY, rotationZ) {
     var vertices = [];
     var colors = [];
-    var angleIncrement = (2 * Math.PI) / segments;
     var rainbowColors = [
         [123/255, 141/255, 74/255],
         [118/255, 136/255, 39/255],
@@ -193,5 +192,233 @@ var envFunction = {
         }
     }
     return { vertices: vertices, colors: colors, faces: faces };
-}
-};
+},
+
+  generateAwan: function(x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalScaleZ) {
+          var vertices = [];
+          var colors = [];
+          var rainbowColors = [
+            [188 / 255, 188 / 255, 188 / 255], // Warna abu-abu gelap
+        ];
+      
+      
+          for (var i = 0; i <= segments; i++) {
+              var latAngle = Math.PI * (-0.5 + (i / segments));
+              var sinLat = Math.sin(latAngle);
+              var cosLat = Math.cos(latAngle);
+              for (var j = 0; j <= segments; j++) {
+                  var lonAngle = 2 * Math.PI * (j / segments);
+                  var sinLon = Math.sin(lonAngle);
+                  var cosLon = Math.cos(lonAngle);
+                  var xCoord = cosLon * cosLat * ovalScaleX;
+                  var yCoord = sinLon * cosLat * ovalScaleY;
+                  var zCoord = sinLat * ovalScaleZ;
+                  var vertexX = x + radius * xCoord;
+                  var vertexY = y + radius * yCoord;
+                  var vertexZ = z + radius * zCoord;
+                  vertices.push(vertexX, vertexY, vertexZ);
+                  var colorIndex = j % rainbowColors.length;
+                  colors = colors.concat(rainbowColors[colorIndex]);
+              }
+          }
+          var faces = [];
+          for (var i = 0; i < segments; i++) {
+              for (var j = 0; j < segments; j++) {
+                  var index = i * (segments + 1) + j;
+                  var nextIndex = index + segments + 1;
+      
+                  faces.push(index, nextIndex, index + 1);
+                  faces.push(nextIndex, nextIndex + 1, index + 1);
+              }
+          }
+          return { vertices: vertices, colors: colors, faces: faces };
+      },
+
+      generateBaseAwan: function(x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalScaleZ) {
+        var vertices = [];
+        var colors = [];
+        var rainbowColors = [
+          [255 / 255, 255 / 255, 255 / 255], // Warna abu-abu gelap
+      ];
+    
+    
+        for (var i = 0; i <= segments; i++) {
+            var latAngle = Math.PI * (-0.5 + (i / segments));
+            var sinLat = Math.sin(latAngle);
+            var cosLat = Math.cos(latAngle);
+            for (var j = 0; j <= segments; j++) {
+                var lonAngle = 2 * Math.PI * (j / segments);
+                var sinLon = Math.sin(lonAngle);
+                var cosLon = Math.cos(lonAngle);
+                var xCoord = cosLon * cosLat * ovalScaleX;
+                var yCoord = sinLon * cosLat * ovalScaleY;
+                var zCoord = sinLat * ovalScaleZ;
+                var vertexX = x + radius * xCoord;
+                var vertexY = y + radius * yCoord;
+                var vertexZ = z + radius * zCoord;
+                vertices.push(vertexX, vertexY, vertexZ);
+                var colorIndex = j % rainbowColors.length;
+                colors = colors.concat(rainbowColors[colorIndex]);
+            }
+        }
+        var faces = [];
+        for (var i = 0; i < segments; i++) {
+            for (var j = 0; j < segments; j++) {
+                var index = i * (segments + 1) + j;
+                var nextIndex = index + segments + 1;
+    
+                faces.push(index, nextIndex, index + 1);
+                faces.push(nextIndex, nextIndex + 1, index + 1);
+            }
+        }
+        return { vertices: vertices, colors: colors, faces: faces };
+    },
+    generatePortal1: function (x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalScaleZ,rotationX, rotationY,rotationZ) {
+      var vertices = [];
+      var colors = [];
+      var rainbowColors = [
+          [255 / 255, 244 / 255, 92 / 255] 
+      ];
+  
+  
+      for (var i = 0; i <= segments; i++) {
+          var latAngle = Math.PI * (-0.5 + (i / segments));
+          var sinLat = Math.sin(latAngle);
+          var cosLat = Math.cos(latAngle);
+          for (var j = 0; j <= segments; j++) {
+              var lonAngle = 2 * Math.PI * (j / segments);
+              var sinLon = Math.sin(lonAngle);
+              var cosLon = Math.cos(lonAngle);
+              var xCoord = cosLon * cosLat * ovalScaleX;
+              var yCoord = sinLon * cosLat * ovalScaleY;
+              var zCoord = sinLat * ovalScaleZ;
+              // Rotasi
+            var rotatedX = xCoord * Math.cos(rotationZ) - yCoord * Math.sin(rotationZ);
+            var rotatedY = xCoord * Math.sin(rotationZ) + yCoord * Math.cos(rotationZ);
+            var rotatedZ = zCoord;
+            // Pemutaran tambahan untuk diagonal
+            rotatedY = rotatedY * Math.cos(rotationX) - rotatedZ * Math.sin(rotationX);
+            rotatedZ = rotatedY * Math.sin(rotationX) + rotatedZ * Math.cos(rotationX);
+            rotatedX = rotatedX * Math.cos(rotationY) - rotatedZ * Math.sin(rotationY);
+            rotatedZ = rotatedX * Math.sin(rotationY) + rotatedZ * Math.cos(rotationY);
+
+            var vertexX = x + radius * rotatedX;
+            var vertexY = y + radius * rotatedY;
+            var vertexZ = z + radius * rotatedZ;
+              vertices.push(vertexX, vertexY, vertexZ);
+              var colorIndex = j % rainbowColors.length;
+              colors = colors.concat(rainbowColors[colorIndex]);
+          } //bentuk bola cuma ditambah scale jdi oval
+      }
+      var faces = [];
+      for (var i = 0; i < segments; i++) {
+          for (var j = 0; j < segments; j++) {
+              var index = i * (segments + 1) + j;
+              var nextIndex = index + segments + 1;
+  
+              faces.push(index, nextIndex, index + 1);
+              faces.push(nextIndex, nextIndex + 1, index + 1);
+          }
+      }
+      return { vertices: vertices, colors: colors, faces: faces} 
+    },
+      
+      generatePortal2: function (x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalScaleZ,rotationX, rotationY,rotationZ) {
+        var vertices = [];
+        var colors = [];
+        var rainbowColors = [
+            [92 / 255, 255 / 255, 236 / 255] 
+        ];
+    
+    
+        for (var i = 0; i <= segments ; i++) {
+            var latAngle = Math.PI * (-0.5 + (i / segments));
+            var sinLat = Math.sin(latAngle);
+            var cosLat = Math.cos(latAngle);
+            for (var j = 0; j <= segments; j++) {
+                var lonAngle = 2 * Math.PI * (j / segments);
+                var sinLon = Math.sin(lonAngle);
+                var cosLon = Math.cos(lonAngle);
+                var xCoord = cosLon * cosLat * ovalScaleX;
+                var yCoord = sinLon * cosLat * ovalScaleY;
+                var zCoord = sinLat * ovalScaleZ;
+                // Rotasi
+            var rotatedX = xCoord * Math.cos(rotationZ) - yCoord * Math.sin(rotationZ);
+            var rotatedY = xCoord * Math.sin(rotationZ) + yCoord * Math.cos(rotationZ);
+            var rotatedZ = zCoord;
+            // Pemutaran tambahan untuk diagonal
+            rotatedY = rotatedY * Math.cos(rotationX) - rotatedZ * Math.sin(rotationX);
+            rotatedZ = rotatedY * Math.sin(rotationX) + rotatedZ * Math.cos(rotationX);
+            rotatedX = rotatedX * Math.cos(rotationY) - rotatedZ * Math.sin(rotationY);
+            rotatedZ = rotatedX * Math.sin(rotationY) + rotatedZ * Math.cos(rotationY);
+
+            var vertexX = x + radius * rotatedX;
+            var vertexY = y + radius * rotatedY;
+            var vertexZ = z + radius * rotatedZ;
+                vertices.push(vertexX, vertexY, vertexZ);
+                var colorIndex = j % rainbowColors.length;
+                colors = colors.concat(rainbowColors[colorIndex]);
+            } //bentuk bola cuma ditambah scale jdi oval
+        }
+        var faces = [];
+        for (var i = 0; i < segments; i++) {
+            for (var j = 0; j < segments; j++) {
+                var index = i * (segments + 1) + j;
+                var nextIndex = index + segments + 1;
+    
+                faces.push(index, nextIndex, index + 1);
+                faces.push(nextIndex, nextIndex + 1, index + 1);
+            }
+        }
+        return { vertices: vertices, colors: colors, faces: faces }
+      },
+      generatePortal3: function (x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalScaleZ,rotationX, rotationY,rotationZ) {
+        var vertices = [];
+        var colors = [];
+        var rainbowColors = [
+            [255 / 255, 156 / 255, 217 / 255] 
+        ];
+    
+    
+        for (var i = 0; i <= segments ; i++) {
+            var latAngle = Math.PI * (-0.5 + (i / segments));
+            var sinLat = Math.sin(latAngle);
+            var cosLat = Math.cos(latAngle);
+            for (var j = 0; j <= segments; j++) {
+                var lonAngle = 2 * Math.PI * (j / segments);
+                var sinLon = Math.sin(lonAngle);
+                var cosLon = Math.cos(lonAngle);
+                var xCoord = cosLon * cosLat * ovalScaleX;
+                var yCoord = sinLon * cosLat * ovalScaleY;
+                var zCoord = sinLat * ovalScaleZ;
+                // Rotasi
+            var rotatedX = xCoord * Math.cos(rotationZ) - yCoord * Math.sin(rotationZ);
+            var rotatedY = xCoord * Math.sin(rotationZ) + yCoord * Math.cos(rotationZ);
+            var rotatedZ = zCoord;
+            // Pemutaran tambahan untuk diagonal
+            rotatedY = rotatedY * Math.cos(rotationX) - rotatedZ * Math.sin(rotationX);
+            rotatedZ = rotatedY * Math.sin(rotationX) + rotatedZ * Math.cos(rotationX);
+            rotatedX = rotatedX * Math.cos(rotationY) - rotatedZ * Math.sin(rotationY);
+            rotatedZ = rotatedX * Math.sin(rotationY) + rotatedZ * Math.cos(rotationY);
+
+            var vertexX = x + radius * rotatedX;
+            var vertexY = y + radius * rotatedY;
+            var vertexZ = z + radius * rotatedZ;
+                vertices.push(vertexX, vertexY, vertexZ);
+                var colorIndex = j % rainbowColors.length;
+                colors = colors.concat(rainbowColors[colorIndex]);
+            } //bentuk bola cuma ditambah scale jdi oval
+        }
+        var faces = [];
+        for (var i = 0; i < segments; i++) {
+            for (var j = 0; j < segments; j++) {
+                var index = i * (segments + 1) + j;
+                var nextIndex = index + segments + 1;
+    
+                faces.push(index, nextIndex, index + 1);
+                faces.push(nextIndex, nextIndex + 1, index + 1);
+            }
+        }
+        return { vertices: vertices, colors: colors, faces: faces }
+      }
+  };

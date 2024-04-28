@@ -286,10 +286,6 @@ function main() {
     var rightribbon = new MyObject(rightribbonData.vertices, rightribbonData.faces, shader_vertex_source, shader_fragment_source, rightribbonData.colors);
     rightribbon.setup();
 
-    var tailData = functionObj2.generateTail(0, -0.78, -0.35, 0.08, 0.6, 50); // Example tabung: x=0, y=0, z=0, radius=0.5, height=1.0, segments=50
-    var tail = new MyObject(tailData.vertices, tailData.faces, shader_vertex_source, shader_fragment_source, tailData.colors);
-    tail.setup();
-
     var tailsphereData = functionObj2.generateTailSphere(0, -0.78, -0.8, 0.2, 100, 1, 1, 1); // x, y, z, radius, segments, ovalScaleX, ovalScaleY, ovalScaleZ
     var tailsphere = new MyObject(tailsphereData.vertices, tailsphereData.faces, shader_vertex_source, shader_fragment_source, tailsphereData.colors);
     tailsphere.setup();
@@ -373,7 +369,6 @@ function main() {
         lowerbody.render(VIEW_MATRIX, PROJECTION_MATRIX);
         leftribbon.render(VIEW_MATRIX, PROJECTION_MATRIX);
         rightribbon.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        tail.render(VIEW_MATRIX, PROJECTION_MATRIX);
         tailsphere.render(VIEW_MATRIX, PROJECTION_MATRIX);
         tailhead.render(VIEW_MATRIX, PROJECTION_MATRIX);
         leftfeet.render(VIEW_MATRIX,PROJECTION_MATRIX);

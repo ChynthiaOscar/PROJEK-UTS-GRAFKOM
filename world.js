@@ -189,7 +189,7 @@ function main() {
     tanah.setup();
 
     // rumput
-    var rumputData = envFunction.generateRumput(0, -0.26, 0.5, 1.05, 20); // badan: x, y, z, radius, segments
+    var rumputData = envFunction.generateRumput(0, -0.29, 0.5, 1.05, 20); // badan: x, y, z, radius, segments
     var rumput = new MyObject(rumputData.vertices, rumputData.faces, shader_vertex_source, shader_fragment_source, rumputData.colors);
     rumput.setup();
 
@@ -203,6 +203,114 @@ function main() {
     var gunung2 = new MyObject(gunung2Data.vertices, gunung2Data.faces, shader_vertex_source,shader_fragment_source, gunung2Data.colors);
     gunung2.setup();
 
+    var awanData = envFunction.generateAwan(-0.15, 1.85, 0, 0.3, 16, 1.5, 1.2, 1.5); // badan: x, y, z, radius, segments
+    var awan = new MyObject(awanData.vertices, awanData.faces, shader_vertex_source,shader_fragment_source, awanData.colors);
+    awan.setup();
+
+    var awanData1 = envFunction.generateAwan(-0.1, 1.72, -0.17, 0.25, 14, 1.5, 1.2, 1.5); // badan: x, y, z, radius, segments
+    var awan1 = new MyObject(awanData1.vertices, awanData1.faces, shader_vertex_source,shader_fragment_source, awanData1.colors);
+    awan1.setup();
+
+    var awanData2 = envFunction.generateAwan(0.3, 1.85, 0.15, 0.25, 20, 1.5, 1.2, 1.5); // badan: x, y, z, radius, segments
+    var awan2 = new MyObject(awanData2.vertices, awanData2.faces, shader_vertex_source,shader_fragment_source, awanData2.colors);
+    awan2.setup();
+
+    var awanData3 = envFunction.generateAwan(0.4, 1.51, -0.15, 0.25, 10, 1.5, 1.2, 1.5); // badan: x, y, z, radius, segments
+    var awan3 = new MyObject(awanData3.vertices, awanData3.faces, shader_vertex_source,shader_fragment_source, awanData3.colors);
+    awan3.setup();
+
+    var awanData4 = envFunction.generateAwan(-0.4, 1.59, -0.1, 0.25, 17, 1.5, 1.2, 1.5); // badan: x, y, z, radius, segments
+    var awan4 = new MyObject(awanData4.vertices, awanData4.faces, shader_vertex_source,shader_fragment_source, awanData4.colors);
+    awan4.setup();
+
+    var awanData5 = envFunction.generateAwan(-0.1, 1.82, 0.25, 0.25, 15, 1.5, 1.2, 1.5); // badan: x, y, z, radius, segments
+    var awan5 = new MyObject(awanData5.vertices, awanData5.faces, shader_vertex_source,shader_fragment_source, awanData5.colors);
+    awan5.setup();
+
+    var awanData6 = envFunction.generateAwan(0.74, 1.71, 0, 0.25, 14, 1.5, 1.2, 1.5); // badan: x, y, z, radius, segments
+    var awan6 = new MyObject(awanData6.vertices, awanData6.faces, shader_vertex_source,shader_fragment_source, awanData6.colors);
+    awan6.setup();
+
+    var baseData = envFunction.generateBaseAwan(-0.6, -1.05, 1, 0.25, 14, 2, 1, 2); // badan: x, y, z, radius, segments
+    var base = new MyObject(baseData.vertices, baseData.faces, shader_vertex_source,shader_fragment_source, baseData.colors);
+    base.setup();
+
+    var baseData1 = envFunction.generateBaseAwan(0.58, -1.05, -0.3, 0.25, 14, 2, 1, 2); // badan: x, y, z, radius, segments
+    var base1 = new MyObject(baseData1.vertices, baseData1.faces, shader_vertex_source,shader_fragment_source, baseData1.colors);
+    base1.setup();
+
+    var baseData2 = envFunction.generateBaseAwan(0.6, -1.05, 1, 0.25, 14, 2, 1, 2); // badan: x, y, z, radius, segments
+    var base2 = new MyObject(baseData2.vertices, baseData2.faces, shader_vertex_source,shader_fragment_source, baseData2.colors);
+    base2.setup();
+
+    var baseData3 = envFunction.generateBaseAwan(-0.58, -1.05, -0.3, 0.25, 14, 2, 1, 2); // badan: x, y, z, radius, segments
+    var base3 = new MyObject(baseData3.vertices, baseData3.faces, shader_vertex_source,shader_fragment_source, baseData3.colors);
+    base3.setup();
+
+    var baseData4 = envFunction.generateBaseAwan(0, -1.25, 0.4, 0.3, 14, 2, 1, 2); // badan: x, y, z, radius, segments
+    var base4 = new MyObject(baseData4.vertices, baseData4.faces, shader_vertex_source,shader_fragment_source, baseData4.colors);
+    base4.setup();
+
+    var baseData5 = envFunction.generateBaseAwan(0, -0.96, 1.1, 0.25, 14, 2, 1, 2); // badan: x, y, z, radius, segments
+    var base5 = new MyObject(baseData5.vertices, baseData5.faces, shader_vertex_source,shader_fragment_source, baseData5.colors);
+    base5.setup();
+
+    var baseData6 = envFunction.generateBaseAwan(0, -0.96, -0.4, 0.25, 14, 2, 1, 2); // badan: x, y, z, radius, segments
+    var base6 = new MyObject(baseData6.vertices, baseData6.faces, shader_vertex_source,shader_fragment_source, baseData6.colors);
+    base6.setup();
+
+    var baseData7 = envFunction.generateBaseAwan(0.8, -0.96, 0.3, 0.25, 14, 2, 1, 2); // badan: x, y, z, radius, segments
+    var base7 = new MyObject(baseData7.vertices, baseData7.faces, shader_vertex_source,shader_fragment_source, baseData7.colors);
+    base7.setup();
+
+    var baseData8 = envFunction.generateBaseAwan(-0.8, -0.96, 0.3, 0.25, 14, 2, 1, 2); // badan: x, y, z, radius, segments
+    var base8 = new MyObject(baseData8.vertices, baseData8.faces, shader_vertex_source,shader_fragment_source, baseData8.colors);
+    base8.setup();
+
+    //Portal 1
+    var portal1Data = envFunction.generatePortal1(0.4, -0.4, 1.3, 0.14, 10   , 0.9, 1.3, 0.3,0.8,0,0 );
+    var portal1 = new MyObject(portal1Data.vertices, portal1Data.faces, shader_vertex_source,shader_fragment_source, portal1Data.colors);
+    portal1.setup();
+
+    //Portal 2
+    var portal2Data = envFunction.generatePortal2(-0.4, -0.4, 1.3, 0.14, 10 , 0.9, 1.3, 0.3,0.8,0,0 );
+    var portal2 = new MyObject(portal2Data.vertices, portal2Data.faces, shader_vertex_source,shader_fragment_source, portal2Data.colors);
+    portal2.setup();
+
+    //Portal 3
+    var portal3Data = envFunction.generatePortal1(-0.4, -0.4, 0.8, 0.14, 10, 0.9, 1.3, 0.3,0,0,0  );
+    var portal3 = new MyObject(portal3Data.vertices, portal3Data.faces, shader_vertex_source,shader_fragment_source, portal3Data.colors);
+    portal3.setup();
+
+    //Portal 4
+    var portal4Data = envFunction.generatePortal2(0.4, -0.4, 0.8, 0.14, 10 , 0.9, 1.3, 0.3,0,0,0 );
+    var portal4 = new MyObject(portal4Data.vertices, portal4Data.faces, shader_vertex_source,shader_fragment_source, portal4Data.colors);
+    portal4.setup();
+    
+    //Portal 5
+    var portal5Data = envFunction.generatePortal1(0.4, -0.4, 0.3, 0.14, 10, 0.9, 1.3, 0.3,0,0,0  );
+    var portal5 = new MyObject(portal5Data.vertices, portal5Data.faces, shader_vertex_source,shader_fragment_source, portal5Data.colors);
+    portal5.setup();
+
+    //Portal 6
+    var portal6Data = envFunction.generatePortal2(-0.4, -0.4, 0.3, 0.14, 10 , 0.9, 1.3, 0.3,0,0,0 );
+    var portal6 = new MyObject(portal6Data.vertices, portal6Data.faces, shader_vertex_source,shader_fragment_source, portal6Data.colors);
+    portal6.setup();
+
+    //Portal 7
+    var portal7Data = envFunction.generatePortal3(0, -0.4, 1.3, 0.14, 10   , 0.9, 1.3, 0.3,0.8,0,0 );
+    var portal7 = new MyObject(portal7Data.vertices, portal7Data.faces, shader_vertex_source,shader_fragment_source, portal7Data.colors);
+    portal7.setup();
+
+    //Portal 8
+    var portal8Data = envFunction.generatePortal3(0, -0.4, 0.8, 0.14, 10, 0.9, 1.3, 0.3,0,0,0  );
+    var portal8 = new MyObject(portal8Data.vertices, portal8Data.faces, shader_vertex_source,shader_fragment_source, portal8Data.colors);
+    portal8.setup();
+
+    //Portal 9
+    var portal9Data = envFunction.generatePortal3(0, -0.4, 0.3, 0.14, 10 , 0.9, 1.3, 0.3,0,0,0 );
+    var portal9 = new MyObject(portal9Data.vertices, portal9Data.faces, shader_vertex_source,shader_fragment_source, portal9Data.colors);
+    portal9.setup();
 
     //OBJECT1
     // Kepala
@@ -371,11 +479,11 @@ function main() {
     var rightribbon = new MyObject(rightribbonData.vertices, rightribbonData.faces, shader_vertex_source, shader_fragment_source, rightribbonData.colors);
     rightribbon.setup();
 
-    var tailsphereData = functionObj2.generateTailSphere(0, 0.09 * 0.4, 0.225 * 0.4, 0.1 * 0.4, 100, 1, 1, 1);
+    var tailsphereData = functionObj2.generateTailSphere(0, -0.09 * 0.4, 0.225 * 0.4, 0.1 * 0.4, 100, 1, 1, 1);
     var tailsphere = new MyObject(tailsphereData.vertices, tailsphereData.faces, shader_vertex_source, shader_fragment_source, tailsphereData.colors);
     tailsphere.setup();
 
-    var tailheadData = functionObj2.generateTail1(0, 0.19 * 0.4, 0.075 * 0.4, -0.075 * 0.4, 100, 1, 1, 2, 0.5, 0, 0);
+    var tailheadData = functionObj2.generateTail1(0, 0.015 * 0.4, 0.075 * 0.4, -0.075 * 0.4, 100, 1, 1, 2, 0.5, 0, 0);
     var tailhead = new MyObject(tailheadData.vertices, tailheadData.faces, shader_vertex_source, shader_fragment_source, tailheadData.colors);
     tailhead.setup();
 
@@ -597,6 +705,23 @@ var dataAlisKiri = functionObj3.generateAlis(
 var alisKiri = new MyObject(dataAlisKiri.vertices, dataAlisKiri.faces, shader_vertex_source, shader_fragment_source, dataAlisKiri.colors);
 alisKiri.setup();
 
+    kepalaAyam.child.push(mataKanan);
+    kepalaAyam.child.push(mataKiri);
+    kepalaAyam.child.push(jenggerDepan);
+    kepalaAyam.child.push(jenggerTengah);
+    kepalaAyam.child.push(jenggerBelakang);
+    kepalaAyam.child.push(jenggerBawahKanan);
+    kepalaAyam.child.push(jenggerBawahKiri);
+    kepalaAyam.child.push(sayapKanan);
+    kepalaAyam.child.push(sayapKiri);
+    // kepalaAyam.child.push(kakiKiri);
+    // kepalaAyam.child.push(kakiKanan);
+    kakiKiri.child.push(telapakKiri1);
+    kakiKiri.child.push(telapakKiri2);
+    kakiKanan.child.push(telapakKanan1);
+    kakiKanan.child.push(telapakKanan2);
+    kepalaAyam.child.push(paruh);
+
 
     //matrix
     var PROJECTION_MATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
@@ -610,7 +735,9 @@ alisKiri.setup();
     var badanAyam = LIBS.get_I4();
     var kakiAyam1 = LIBS.get_I4();
     var kakiAyam2 = LIBS.get_I4();
-    var MODEL_MATRIX10 = LIBS.get_I4();
+    var badanChikipi = LIBS.get_I4();
+    var kakiChikipi1 = LIBS.get_I4();
+    var kakiChikipi2 = LIBS.get_I4();
 
     // Event listener untuk mouse movement
     document.addEventListener('mousemove', function (event) {
@@ -711,9 +838,10 @@ alisKiri.setup();
     var flopiePos = [0, -0.105 * 0.4, 0.55 * 0.4];
     var walkFront1 = true; // Initial movement direction for badan2
     
-
+    var chikipiMovementSpeed = 0.005;
+    var chikipiPos = [1.8*0.25, -0.2*0.25, 1.4*0.25];
+    var walkFront2 = true; // Initial movement direction for badan
     
-
 
     var MODEL_MATRIX;
     var time_prev = 0;
@@ -740,11 +868,35 @@ alisKiri.setup();
             
         //render
         // ENVIRONMENT
-        tanah.render(tanah.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
-        rumput.render(rumput.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
-        gunung.render(gunung.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
-        gunung2.render(gunung2.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
-
+        tanah.render(tanah.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        rumput.render(rumput.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        gunung.render(gunung.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        gunung2.render(gunung2.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        awan.render(awan.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        awan1.render(awan1.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        awan2.render(awan2.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        awan3.render(awan3.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        awan4.render(awan4.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        awan5.render(awan5.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        awan6.render(awan6.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        base.render(base.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        base1.render(base1.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        base2.render(base2.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        base3.render(base3.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        base4.render(base4.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        base5.render(base5.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        base6.render(base6.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        base7.render(base7.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        base8.render(base8.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        portal1.render(portal1.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        portal2.render(portal2.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        portal3.render(portal3.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        portal4.render(portal4.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        portal5.render(portal5.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        portal6.render(portal6.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        portal7.render(portal7.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        portal8.render(portal8.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        portal9.render(portal8.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
 
 
         //OBJECT 1
@@ -807,39 +959,6 @@ alisKiri.setup();
         badan1.MODEL_MATRIX = badanDepresso;
         badan1.render(badan1.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
 
-
-        // kaki1.MODEL_MATRIX = MODEL_MATRIX2;
-        // alas2.MODEL_MATRIX = MODEL_MATRIX3;
-        // // alas1.MODEL_MATRIX = MODEL_MATRIX2;
-        // kaki1.render(kaki1.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
-        // kaki2.MODEL_MATRIX = MODEL_MATRIX3;
-        // kaki2.render(kaki2.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
-        
-        // kepala.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // badan1.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // badan2.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // tangan1.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // tangan2.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // pipi1.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // pipi2.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // tanduk1.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // tanduk2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // ekor1.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // ekor2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // ekor3.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // kaki1.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // kaki2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // alas1.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // alas2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // mata1.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // mata2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // mata3.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // mata4.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // mata5.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // mata6.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // mulut.render(VIEW_MATRIX,PROJECTION_MATRIX);
-
-
         // // OBJECT2
         // posisi awal
         if (walkFront1 == true) {
@@ -892,54 +1011,56 @@ alisKiri.setup();
         lowerbody.render(lowerbody.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
 
 
-        // alas2.MODEL_MATRIX = MODEL_MATRIX3;
-        // head.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // upperbody.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // leftribbon.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // rightribbon.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        //     // tail.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // tailsphere.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // tailhead.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // leftfeet.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // rightfeet.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // rightsole.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // leftsole.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // leftshoulder.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // rightshoulder.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // leftarm.render(leftarm.MODEL_MATRIX,VIEW_MATRIX,PROJECTION_MATRIX);
-        // rightarm.render(rightarm.MODEL_MATRIX,VIEW_MATRIX,PROJECTION_MATRIX);
-        // leftear.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // rightear.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // lefteye.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // righteye.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // lefteye2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // righteye2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // lefteye3.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // righteye3.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // nose.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // mouth1.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // mouth2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-
         //OBJECT3
-        // kepalaAyam.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // sayapKiri.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // sayapKanan.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // kakiKiri.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // kakiKanan.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // mataKanan.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // mataKiri.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // jenggerDepan.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // jenggerTengah.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // jenggerBelakang.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // paruh.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // jenggerBawahKiri.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // jenggerBawahKanan.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // telapakKanan1.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // telapakKanan2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // telapakKiri1.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // telapakKiri2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        // alisKanan.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // alisKiri.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        if (walkFront2 == true) {
+            chikipiPos[2] += chikipiMovementSpeed;
+            if(chikipiPos[2] >= 1) {
+            walkFront2 = false;
+            }
+        }
+        else {
+            chikipiPos[2] -= chikipiMovementSpeed;
+            if(chikipiPos[2] <= 0.65) {
+            walkFront2 = true;
+            }
+        }
+
+        badanChikipi = LIBS.get_I4();
+        LIBS.translateZ(badanChikipi, chikipiPos[2]);
+        
+        
+        // Apply rotations to kaki1 and kaki2
+        kakiChikipi1 = LIBS.get_I4();
+        LIBS.rotateX(kakiChikipi1, kaki1Angle);
+        LIBS.translateZ(kakiChikipi1, chikipiPos[2]);
+        // if (!walkFront) {
+        //     LIBS.rotateY(kakiFlopie1, Math.PI);
+        // }
+        kakiKiri.MODEL_MATRIX = kakiChikipi1;
+        kakiChikipi2 = LIBS.get_I4();
+        LIBS.rotateX(kakiChikipi2, kaki2Angle);
+        LIBS.translateZ(kakiChikipi2, chikipiPos[2]);
+        // if (!walkFront) {
+        //     LIBS.rotateY(kakiFlopie2, Math.PI);
+        // }
+        kakiKanan.MODEL_MATRIX = kakiChikipi2;
+        // alas1.MODEL_MATRIX = MODEL_MATRIX2;
+        if (!walkFront2) {
+            LIBS.rotateY(badanChikipi, Math.PI);
+            LIBS.rotateY(kakiChikipi1, Math.PI);
+
+            LIBS.rotateY(kakiChikipi2, Math.PI);
+
+        }
+        kakiKiri.render(kakiKiri.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+
+        
+        kakiKanan.render(kakiKanan.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        
+
+        kepalaAyam.MODEL_MATRIX = badanChikipi;
+        kepalaAyam.render(kepalaAyam.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+
 
 
         GL.flush();
