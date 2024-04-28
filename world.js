@@ -737,6 +737,17 @@ alisKiri.setup();
             LIBS.translateX(VIEW_MATRIX, cameraSpeed);
         }
 
+            
+        //render
+        // ENVIRONMENT
+        tanah.render(tanah.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        rumput.render(rumput.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        gunung.render(gunung.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+        gunung2.render(gunung2.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+
+
+
+        //OBJECT 1
         //posisi awal
         if (walkFront == true) {
             depressoPos[2] += depressoMovementSpeed;
@@ -789,26 +800,21 @@ alisKiri.setup();
         if (!walkFront) {
             LIBS.rotateY(kakiDepresso2, Math.PI);
         }
-        // alas2.MODEL_MATRIX = MODEL_MATRIX3;
+        
         kaki2.MODEL_MATRIX = kakiDepresso2;
         kaki2.render(kaki2.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
-        
-          
-        //render
-        // ENVIRONMENT
-        tanah.render(tanah.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
-        rumput.render(rumput.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
-        gunung.render(gunung.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
-        gunung2.render(gunung2.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
 
-        //OBJECT 1
+        badan1.MODEL_MATRIX = badanDepresso;
+        badan1.render(badan1.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+
+
         // kaki1.MODEL_MATRIX = MODEL_MATRIX2;
+        // alas2.MODEL_MATRIX = MODEL_MATRIX3;
         // // alas1.MODEL_MATRIX = MODEL_MATRIX2;
         // kaki1.render(kaki1.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
         // kaki2.MODEL_MATRIX = MODEL_MATRIX3;
         // kaki2.render(kaki2.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
-        badan1.MODEL_MATRIX = badanDepresso;
-        badan1.render(badan1.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        
         // kepala.render(VIEW_MATRIX, PROJECTION_MATRIX);
         // badan1.render(VIEW_MATRIX, PROJECTION_MATRIX);
         // badan2.render(VIEW_MATRIX, PROJECTION_MATRIX);
@@ -833,6 +839,7 @@ alisKiri.setup();
         // mata6.render(VIEW_MATRIX,PROJECTION_MATRIX);
         // mulut.render(VIEW_MATRIX,PROJECTION_MATRIX);
 
+
         // // OBJECT2
         // posisi awal
         if (walkFront1 == true) {
@@ -843,45 +850,51 @@ alisKiri.setup();
         }
         else {
             flopiePos[2] -= flopieMovementSpeed;
-            if(flopiePos[2] <= -1) {
+            if(flopiePos[2] <= 0.65) {
             walkFront1 = true;
             }
         }
 
         badanFlopie = LIBS.get_I4();
         LIBS.translateZ(badanFlopie, flopiePos[2]);
-        if (!walkFront1) {
-            LIBS.rotateY(badanFlopie, Math.PI);
-        }
+        
         
         // Apply rotations to kaki1 and kaki2
         kakiFlopie1 = LIBS.get_I4();
         LIBS.rotateX(kakiFlopie1, kaki1Angle);
         LIBS.translateZ(kakiFlopie1, flopiePos[2]);
-        if (!walkFront) {
-            LIBS.rotateY(kakiFlopie1, Math.PI);
-        }
+        // if (!walkFront) {
+        //     LIBS.rotateY(kakiFlopie1, Math.PI);
+        // }
         leftfeet.MODEL_MATRIX = kakiFlopie1;
-        // alas1.MODEL_MATRIX = MODEL_MATRIX2;
-        leftfeet.render(leftfeet.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
-
         kakiFlopie2 = LIBS.get_I4();
         LIBS.rotateX(kakiFlopie2, kaki2Angle);
         LIBS.translateZ(kakiFlopie2, flopiePos[2]);
-        if (!walkFront) {
-            LIBS.rotateY(kakiFlopie2, Math.PI);
-        }
+        // if (!walkFront) {
+        //     LIBS.rotateY(kakiFlopie2, Math.PI);
+        // }
         rightfeet.MODEL_MATRIX = kakiFlopie2;
-        rightfeet.render(rightfeet.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        // alas1.MODEL_MATRIX = MODEL_MATRIX2;
+        if (!walkFront1) {
+            LIBS.rotateY(badanFlopie, Math.PI);
+            LIBS.rotateY(kakiFlopie1, Math.PI);
 
-        // alas2.MODEL_MATRIX = MODEL_MATRIX3;
+            LIBS.rotateY(kakiFlopie2, Math.PI);
+
+        }
+        leftfeet.render(leftfeet.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+
         
+        rightfeet.render(rightfeet.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
         
-        // head.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        // upperbody.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        
+
         lowerbody.MODEL_MATRIX = badanFlopie;
         lowerbody.render(lowerbody.MODEL_MATRIX,VIEW_MATRIX, PROJECTION_MATRIX);
+
+
+        // alas2.MODEL_MATRIX = MODEL_MATRIX3;
+        // head.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // upperbody.render(VIEW_MATRIX, PROJECTION_MATRIX);
         // leftribbon.render(VIEW_MATRIX, PROJECTION_MATRIX);
         // rightribbon.render(VIEW_MATRIX, PROJECTION_MATRIX);
         //     // tail.render(VIEW_MATRIX, PROJECTION_MATRIX);
