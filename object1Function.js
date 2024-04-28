@@ -694,6 +694,38 @@ generateMata: function(x, y, z, radius, segments,ovalScaleX, ovalScaleY, ovalSca
     }
   
     return { vertices: vertices, colors: colors, faces: faces, center: center };
-  }
+  },
 
+  
+  generateCurves:function (controlPoints, segments,zOffset, thickness) {
+        var vertices = [];
+        var colors = [];
+      
+        var rainbowColors = [[0, 0, 0]]; 
+      
+        for (var i = 0; i <= segments; i++) {
+          var t = i / segments;
+          var x = Math.pow(1 - t, 3) * controlPoints[0][0] + 3 * Math.pow(1 - t, 2) * t * controlPoints[1][0] + 3 * (1 - t) * Math.pow(t, 2) * controlPoints[2][0] + Math.pow(t, 3) * controlPoints[3][0];
+          var y = Math.pow(1 - t, 3) * controlPoints[0][1] + 3 * Math.pow(1 - t, 2) * t * controlPoints[1][1] + 3 * (1 - t) * Math.pow(t, 2) * controlPoints[2][1] + Math.pow(t, 3) * controlPoints[3][1];
+          var z = Math.pow(1 - t, 3) * controlPoints[0][2] + 3 * Math.pow(1 - t, 2) * t * controlPoints[1][2] + 3 * (1 - t) * Math.pow(t, 2) * controlPoints[2][2] + Math.pow(t, 3) * controlPoints[3][2];
+      
+          vertices.push(x - thickness, y - thickness, z + zOffset);
+          vertices.push(x + thickness, y - thickness, z + zOffset);
+          vertices.push(x, y + thickness, z + zOffset);
+      
+          var colorIndex = Math.floor(t * rainbowColors.length);
+          colors = colors.concat(rainbowColors[colorIndex]);
+          colors = colors.concat(rainbowColors[colorIndex]);
+          colors = colors.concat(rainbowColors[colorIndex]);
+        }
+      
+        var faces = [];
+        for (var i = 0; i < segments; i++) {
+          var index = i * 3;
+          faces.push(index, index + 1, index + 2); // create triangles for each vertex
+        }
+      
+        return { vertices: vertices, colors: colors, faces: faces };
+      }
+      
 };

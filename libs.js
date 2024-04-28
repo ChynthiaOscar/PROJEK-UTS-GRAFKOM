@@ -6,7 +6,37 @@ var LIBS = {
 
     },
 
+    multiply: function(mat1, mat2){
+      var res = this.get_I4();
+      var N = 4;
+      let i, j, k;
+      for (i = 0; i < N; i++){
+        for (j = 0; j < N; j++){
+          res[i*N + j] = 0;
+          for (k = 0; k < N; k++)
+            res[i*N + j] += mat1[i*N + k]*mat2[k*N + j];
+        }
+      }
+      return res;
+    },
+
+    load_texture: function(image_URL){
+      var texture = GL.createTexture();
   
+      var image = new Image();
+      image.src = image_URL;
+      image.onload = function(e) {
+        GL.bindTexture(GL.TEXTURE_2D, texture);
+        GL.pixelStorei(GL.UNPACK_FLIP_Y_WEBGL, true);
+        GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGBA, GL.RGBA, GL.UNSIGNED_BYTE, image);
+        GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MAG_FILTER, GL.LINEAR);
+        GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.NEAREST_MIPMAP_LINEAR);
+        GL.generateMipmap(GL.TEXTURE_2D);
+        GL.bindTexture(GL.TEXTURE_2D, null);
+      };
+  
+      return texture;
+    },
 
     get_projection: function(angle, a, zMin, zMax) {
 

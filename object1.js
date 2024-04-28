@@ -90,13 +90,14 @@ var GL;
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.TRIANGLE_FACES);
         GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(this.faces), GL.STATIC_DRAW);
         this.child.forEach(obj => {
+            
             obj.setup();
         });
     }
     
 
 
-    render(VIEW_MATRIX, PROJECTION_MATRIX){
+    render(model_matrix, VIEW_MATRIX, PROJECTION_MATRIX){
         GL.useProgram(this.SHADER_PROGRAM);  
         GL.bindBuffer(GL.ARRAY_BUFFER, this.TRIANGLE_VERTEX);
         GL.vertexAttribPointer(this._position, 3, GL.FLOAT, false, 0, 0); // Use the position buffer
@@ -106,18 +107,19 @@ var GL;
     
         GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.TRIANGLE_FACES);
               
-        GL.uniformMatrix4fv(this._PMatrix,false,PROJECTION_MATRIX);
-        GL.uniformMatrix4fv(this._VMatrix,false,VIEW_MATRIX);
-        GL.uniformMatrix4fv(this._MMatrix,false,this.MODEL_MATRIX);
+        GL.uniformMatrix4fv(this._PMatrix, false, PROJECTION_MATRIX);
+        GL.uniformMatrix4fv(this._VMatrix, false, VIEW_MATRIX);
+        GL.uniformMatrix4fv(this._MMatrix, false, model_matrix); // Use the provided model_matrix
         GL.uniform1f(this._greyScality, 1);
      
         GL.drawElements(GL.TRIANGLES, this.faces.length, GL.UNSIGNED_SHORT, 0);
     
         GL.flush();
         this.child.forEach(obj => {
-            obj.render(VIEW_MATRIX, PROJECTION_MATRIX);
+            obj.render(model_matrix, VIEW_MATRIX, PROJECTION_MATRIX); // Pass model_matrix to child objects
         });
     }
+    
   }
  
   
@@ -140,8 +142,8 @@ function main() {
 
     CANVAS.width = window.innerWidth;
     CANVAS.height = window.innerHeight;
-
     
+
     try {
         GL = CANVAS.getContext("webgl", { antialias: true });
         var EXT = GL.getExtension("OES_element_index_uint");
@@ -187,8 +189,9 @@ function main() {
     var PROJECTION_MATRIX = LIBS.get_projection(40, CANVAS.width / CANVAS.height, 1, 100);
     var VIEW_MATRIX = LIBS.get_I4();
     var MODEL_MATRIX = LIBS.get_I4();
-    
-
+    var MODEL_MATRIX2 = LIBS.get_I4();
+    var MODEL_MATRIX3 = LIBS.get_I4();
+    var MODEL_MATRIX4 = LIBS.get_I4();
     // Event listener untuk mouse movement
     document.addEventListener('mousemove', function (event) {
         if (isMouseDown) {
@@ -375,6 +378,29 @@ function main() {
     var mata6Data = functionObj1.generateMata3(-0.22, 0.02, 1.02, 0.12, 200); // badan: x, y, z, radius, segments
     var mata6 = new MyObject(mata6Data.vertices, mata6Data.faces, shader_vertex_source, shader_fragment_source, mata6Data.colors);
     mata6.setup();
+
+    //CHILD PUSH
+badan1.child.push(badan2);
+badan1.child.push(kepala);
+kepala.child.push(mata1);
+kepala.child.push(mata2);
+mata2.child.push(mata4);
+mata4.child.push(mata6);
+mata1.child.push(mata3);
+mata3.child.push(mata5);
+kepala.child.push(tanduk1);
+kepala.child.push(tanduk2);
+kepala.child.push(pipi1);
+kepala.child.push(pipi2);
+ekor1.child.push(ekor2);
+ekor2.child.push(ekor3);
+badan2.child.push(tangan1);
+badan2.child.push(tangan2);
+// badan2.child.push(kaki1);
+// badan2.child.push(kaki2);
+badan2.child.push(ekor1);
+kaki1.child.push(alas2);
+kaki2.child.push(alas1);
     
     /*========================= DRAWING ========================= */
     GL.clearColor(0.0, 0.0, 0.0, 0.0);
@@ -385,6 +411,19 @@ function main() {
 
     var cameraSpeed = 0.1; // Kecepatan pergerakan kamera
 
+    
+var depressoMovementSpeed = 0.05; // Movement speed for badan2
+var walkFront = true; // Initial movement direction for badan2
+var depressoPos = [0, -0.9, 0.5];
+var depressoFeet1Pos=[0.2, -1.4, 0.5];
+var depressoFeet2Pos=[-0.2, -1.4, 0.5];
+
+var walkAngle = 0; // Initial angle for walking animation
+var walkSpeed = 0.005; // Speed of the walking animation
+var maxWalkAngle = Math.PI / 14; 
+
+
+var MODEL_MATRIX;
     var time_prev = 0;
     var animate = function (time) {
         GL.viewport(0, 0, CANVAS.width, CANVAS.height);
@@ -406,28 +445,90 @@ function main() {
             LIBS.translateX(VIEW_MATRIX, cameraSpeed);
         }
 
-        kepala.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        badan1.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        badan2.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        tangan1.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        tangan2.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        pipi1.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        pipi2.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        tanduk1.render(VIEW_MATRIX, PROJECTION_MATRIX);
-        tanduk2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        ekor1.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        ekor2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        ekor3.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        kaki1.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        kaki2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        alas1.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        alas2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        mata1.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        mata2.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        mata3.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        mata4.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        mata5.render(VIEW_MATRIX,PROJECTION_MATRIX);
-        mata6.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        //posisi awal
+        if (walkFront == true) {
+            depressoPos[2] += depressoMovementSpeed;
+            if(depressoPos[2] >= 10) {
+              walkFront = false;
+            }
+          }
+          else {
+            depressoPos[2] -= depressoMovementSpeed;
+            if(depressoPos[2] <= -10) {
+              walkFront = true;
+            }
+          }
+
+          MODEL_MATRIX = LIBS.get_I4();
+          LIBS.translateZ(MODEL_MATRIX, depressoPos[2]);
+          if (!walkFront) {
+              LIBS.rotateY(MODEL_MATRIX, Math.PI);
+          }
+        
+        
+    
+// Logic for walking animation
+walkAngle += walkSpeed;
+if (walkAngle > maxWalkAngle) {
+    walkSpeed = -walkSpeed; // Reverse direction if reaching the maximum angle
+} else if (walkAngle < -maxWalkAngle) {
+    walkSpeed = -walkSpeed; // Reverse direction if reaching the minimum angle
+}
+
+// Rotate kaki1 and kaki2 alternately
+var kaki1Angle = walkAngle;
+var kaki2Angle = -walkAngle;
+
+var MODEL_MATRIX;
+// Other code...
+
+// Apply rotations to kaki1 and kaki2
+MODEL_MATRIX2 = LIBS.get_I4();
+LIBS.rotateX(MODEL_MATRIX2, kaki1Angle);
+LIBS.translateZ(MODEL_MATRIX2, depressoPos[2]);
+if (!walkFront) {
+    LIBS.rotateY(MODEL_MATRIX2, Math.PI);
+}
+kaki1.MODEL_MATRIX = MODEL_MATRIX2;
+// alas1.MODEL_MATRIX = MODEL_MATRIX2;
+kaki1.render(kaki1.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+
+
+MODEL_MATRIX3 = LIBS.get_I4();
+LIBS.rotateX(MODEL_MATRIX3, kaki2Angle);
+LIBS.translateZ(MODEL_MATRIX3, depressoPos[2]);
+if (!walkFront) {
+    LIBS.rotateY(MODEL_MATRIX3, Math.PI);
+}
+// alas2.MODEL_MATRIX = MODEL_MATRIX3;
+kaki2.MODEL_MATRIX = MODEL_MATRIX3;
+kaki2.render(kaki2.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        
+        
+        badan1.MODEL_MATRIX = MODEL_MATRIX;
+        badan1.render(badan1.MODEL_MATRIX, VIEW_MATRIX, PROJECTION_MATRIX);
+        // kepala.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // badan1.render(VIEW_MATRIX, PROJECTION_MATRIX);
+       
+        // tangan1.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // tangan2.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // pipi1.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // pipi2.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // tanduk1.render(VIEW_MATRIX, PROJECTION_MATRIX);
+        // tanduk2.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // ekor1.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // ekor2.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // ekor3.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // kaki1.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // kaki2.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // alas1.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // alas2.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // mata1.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // mata2.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // mata3.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // mata4.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // mata5.render(VIEW_MATRIX,PROJECTION_MATRIX);
+        // mata6.render(VIEW_MATRIX,PROJECTION_MATRIX);
 
         GL.flush();
 
